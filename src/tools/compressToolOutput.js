@@ -1,10 +1,25 @@
 import { HeuristicCompressor } from '../compressors/heuristicCompressor.js';
+import { LogCompressor } from '../compressors/logCompressor.js';
 import { createCompressionReport } from '../reports/createCompressionReport.js';
 
 export async function compressToolOutput(input, options = {}) {
   const output = typeof input === 'string' ? input : input.output;
   const type = typeof input === 'string' ? options.type ?? 'text' : input.type ?? options.type ?? 'text';
   const maxChars = options.maxChars ?? 1600;
+
+  if (type === 'log') {
+    const compressor = new LogCompressor(options.logOptions ?? {});
+    const result = await compressor.compressText(output);
+    return {
+      output: result.text.length > maxChars ? `${result.text.slice(0, maxChars).trim()}...` : result.text,
+      report: createCompressionReport(output, result.text),
+      metadata: {
+        ...result.metadata,
+        type,
+        maxChars
+      }
+    };
+  }
 
   const compressed = type === 'json'
     ? compressJsonLike(output, maxChars)

@@ -48,6 +48,12 @@ console.log(result.report, budgetCheck);
 - Token budget checks
 - No-op compressor for baselines
 - Heuristic local compressor
+- Structural JSON compression
+- Structural log compression
+- Message/history compression
+- Signal extraction
+- Budgeted context building
+- In-memory and file original stores
 - RAG chunk ranking
 - RAG context compression
 - Tool output/log compression
@@ -75,6 +81,18 @@ Baseline compressor that preserves input.
 
 Local dependency-free compressor for text and chunks.
 
+### `new JsonCompressor(options?)`
+
+Structural JSON compressor for large arrays, nested objects, repeated schemas, signal preservation, array statistics, and optional reversible references.
+
+### `new LogCompressor(options?)`
+
+Structural log compressor that preserves first lines, last lines, high-signal lines, stack traces, and repeated-pattern summaries.
+
+### `new MessageCompressor(options?)`
+
+Conversation/history compressor that preserves system/developer messages, recent turns, and high-signal evidence from older messages.
+
 ### `compressRagContext({ query, chunks }, options)`
 
 Ranks and compresses RAG chunks using a compressor implementation.
@@ -87,10 +105,19 @@ Compresses logs, terminal output, JSON-like strings, and noisy tool outputs.
 
 Returns before/after chars, estimated tokens, and reduction percentages.
 
+### `extractSignals(input, options?)`
+
+Finds high-value evidence such as errors, warnings, timeouts, HTTP failures, IDs, file paths, stack traces, and infrastructure failures.
+
+### `new BudgetedContextBuilder({ budget })`
+
+Builds a prioritized context package that includes required sections first and omits lower-priority sections when the token budget is exceeded.
+
 ## Examples
 
 ```powershell
 npm run example:rag
+npm run example:json
 npm run example:tool-output
 ```
 
@@ -133,7 +160,7 @@ npm run check
 - `GroqModelAdapter`
 - `LmStudioModelAdapter`
 - `TransformersJsReranker`
-- persistent reversible compression references
+- stronger persistent reversible compression references
 - better tokenizer adapters
 - benchmark fixtures for RAG/tool-output workloads
 

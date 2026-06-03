@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 const commands = [
   ['npm', ['test']],
   ['npm', ['run', 'example:rag']],
+  ['npm', ['run', 'example:json']],
   ['npm', ['run', 'example:tool-output']]
 ];
 
