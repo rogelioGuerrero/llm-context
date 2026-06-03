@@ -1,0 +1,31 @@
+{
+  "name": "llm-context",
+  "version": "0.1.0",
+  "description": "Model-agnostic context preparation, compression, budgeting, and reporting utilities for LLM applications.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "example:rag": "node examples/rag-basic/index.js",
+    "example:tool-output": "node examples/tool-output/index.js",
+    "check": "node scripts/check.js"
+  },
+  "keywords": [
+    "llm",
+    "context",
+    "rag",
+    "compression",
+    "tokens",
+    "groq",
+    "lm-studio",
+    "openai-compatible"
+  ],
+  "author": "Rogelio Guerrero",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
